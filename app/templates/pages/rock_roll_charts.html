@@ -1,0 +1,402 @@
+{% extends "layouts/default.html" %}
+
+{% block title %} Rock & Roll Charts {% endblock title %}
+
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="page-inner">
+        <h4 class="page-title">Rock & Roll Charts</h4>
+        <div class="page-category">Data charts for the Rock & Roll Machine.</div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Search Option</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <div class="row">
+                                <div class="col-sm" id="date_choose">
+                                    <input id="search_date" type="option selected" class="form-control"
+                                           placeholder="Choose a date first" autocomplete="off">
+                                </div>
+                                <div class="col-sm dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                            data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false" style="width: 80%;">Recipe Name
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                         id="recipes_dropdown">
+                                    </div>
+                                </div>
+                                <div class="col-sm dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                            data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false" style="width: 80%;">Number made that day
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                         id="number_dropdown">
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Serial Number</h4>
+                                    <div class="row col-sm">
+                                        <input id="serial_day" type="text" disabled="true"
+                                               placeholder="Julian Day" style="text-align: center">
+                                        <b class="caret-serial">-</b>
+                                        <input id="serial_year" type="text" disabled="true"
+                                               placeholder="Year" style="text-align: center">
+                                        <b class="caret-serial">-</b>
+                                        <input id="serial_recipe" type="text" disabled="true"
+                                               placeholder="Product (#Recipe)" style="text-align: center">
+                                        <b class="caret-serial">-</b>
+                                        <input id="serial_number" type="text" disabled="true"
+                                               placeholder="Which one" style="text-align: center">
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <button class="btn btn-primary" type="button" aria-haspopup="true"
+                                            aria-expanded="false" style="width: 100%;" id="search_button">Search
+                                    </button>
+                                </div>
+                                {#                                <h1>&nbsp&nbsp&nbsp&nbsp</h1>#}
+                                {#                                <div id="loading" class="spinner-border text-primary" role="status"#}
+                                {#                                     style="visibility: hidden">#}
+                                {#                                    <span class="sr-only">Loading...</span>#}
+                                {#                                </div>#}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                {#                <div class="card">#}
+                {#                    <div class="card-header">#}
+                {#                        <div class="card-title">Oven_Temperature_PV</div>#}
+                {#                    </div>#}
+                {#                    <div class="card-body">#}
+                {#                        <div class="chart-container" id="OT_line_chart_parent">#}
+                {#                            <canvas id="OT_line_chart"></canvas>#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                </div>#}
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Mould & Cooling & Oven Temperature</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container" id="CT_MT_mix_line_chart_parent">
+                            <canvas id="CT_MT_mix_line_chart" style="width: 50%; height: 50%"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {#            <div class="col-md-12">#}
+            {#                <div class="card">#}
+            {#                    <div class="card-header">#}
+            {#                        <div class="card-title">Mould_Temperature_PV</div>#}
+            {#                    </div>#}
+            {#                    <div class="card-body">#}
+            {#                        <div class="chart-container" id="MT_line_chart_parent">#}
+            {#                            <canvas id="MT_line_chart"></canvas>#}
+            {#                        </div>#}
+            {#                    </div>#}
+            {#                </div>#}
+            {#            </div>#}
+            {#            <div class="col-md-12">#}
+            {#                <div class="card">#}
+            {#                    <div class="card-header">#}
+            {#                        <div class="card-title">Cooling_Temperature_PV</div>#}
+            {#                    </div>#}
+            {#                    <div class="card-body">#}
+            {#                        <div class="chart-container" id="CT_line_chart_parent">#}
+            {#                            <canvas id="CT_line_chart" style="width: 50%; height: 50%"></canvas>#}
+            {#                        </div>#}
+            {#                    </div>#}
+            {#                </div>#}
+            {#            </div>#}
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Rock_Angle_PV</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container" id="RockA_line_chart_parent">
+                            <canvas id="RockA_line_chart" style="width: 50%; height: 50%"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Roll_Angle_PV</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container" id="RollA_line_chart_parent">
+                            <canvas id="RollA_line_chart" style="width: 50%; height: 50%"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+    <script src="/static/assets/js/utils.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/assets/js/rock_roll.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/assets/js/rock_roll_search.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        var Data = {
+            {#-------Oven_Temperature_PV--------#}
+            ot_names:{{ ot_names|tojson }},
+            ot_dates:{{ ot_dates|tojson }},
+            ot_values:{{ ot_values|tojson }},
+            ot_validities:{{ ot_validities|tojson }},
+            ot_mills:{{ot_mills|tojson }},
+
+            {#---------Mould_Temperature_PV--------#}
+            mt_names:{{ mt_names|tojson }},
+            mt_dates:{{ mt_dates|tojson }},
+            mt_values:{{ mt_values|tojson }},
+            mt_validities:{{ mt_validities|tojson }},
+            mt_mills:{{mt_mills|tojson }},
+
+            {#-------Cooling_Temperature_PV--------#}
+            ct_names:{{ ct_names|tojson }},
+            ct_dates:{{ ct_dates|tojson }},
+            ct_values:{{ ct_values|tojson }},
+            ct_validities:{{ ct_validities|tojson }},
+            ct_mills:{{ct_mills|tojson }},
+
+            {#------------Rock_Angle_PV------------#}
+            rock_a_names:{{ rock_a_names|tojson }},
+            rock_a_dates:{{ rock_a_dates|tojson }},
+            rock_a_values:{{ rock_a_values|tojson }},
+            rock_a_validities:{{ rock_a_validities|tojson }},
+            rock_a_mills:{{rock_a_mills|tojson }},
+
+            {#------------Roll_Angle_PV------------#}
+            roll_a_names:{{ roll_a_names|tojson }},
+            roll_a_dates:{{ roll_a_dates|tojson }},
+            roll_a_values:{{ roll_a_values|tojson }},
+            roll_a_validities:{{ roll_a_validities|tojson }},
+            roll_a_mills:{{roll_a_mills|tojson }},
+
+            {#------------Labels------------#}
+            label_points_str:{{ label_points_str|tojson }},
+            labels_str:{{ labels_str|tojson }}
+
+        };
+
+        //Fill latest date into the date picker
+        let latest_date = Data.ot_dates.split("_")[0].split(" ")[0].split(".");
+        document.getElementById("search_date").placeholder = "Latest day:  " + latest_date[0] + "-" + latest_date[1] + "-" + latest_date[2];
+
+        plotGraphs(Data.ot_dates, Data.ot_values, Data.mt_dates, Data.mt_values, Data.ct_dates, Data.ct_values, Data.rock_a_dates, Data.rock_a_values, Data.roll_a_dates, Data.roll_a_values, Data.label_points_str, Data.labels_str);
+
+        function JulianDate(day, month, year) {
+            const hasTimestamp = new Date(year, month - 1, day) - new Date(year);
+            //console.log(new Date(year, month - 1, day) + " + " + new Date(year));
+            const hasDays = Math.ceil(hasTimestamp / 86400000) + 1;
+            return hasDays;
+        }
+
+        $('#date_choose input').datepicker({
+            language: "en-NZ",//set location to NZ
+            autoclose: true,//auto close
+            format: "dd-mm-yyyy",//date show format
+            orientation: "bottom auto",
+        }).on('changeDate', function (ev) {
+            //console.log($('#search_date').val());
+
+            let select_date = $('#search_date').val();
+            let select_day = select_date.split("-")[0];
+            let select_month = select_date.split("-")[1];
+            let select_year = select_date.split("-")[2];
+
+            let julian_day = JulianDate(select_day, select_month, select_year);
+            document.getElementById("serial_day").value = julian_day.toString();
+            document.getElementById("serial_year").value = select_year;
+
+
+            let XHR = new XMLHttpRequest();
+            let result = {};
+            result['date'] = select_date;
+            let pay_load = {"new_result": result};
+            XHR.open('POST', '/api/get_recipe');
+            XHR.setRequestHeader('content-type', 'application/json');  //先open再设置请求头
+            XHR.send(JSON.stringify(pay_load));
+
+            let recipes_select = document.getElementById("recipes_dropdown");
+            while (recipes_select.hasChildNodes()) {
+                recipes_select.removeChild(recipes_select.firstChild);
+            }
+            let number_select = document.getElementById("number_dropdown");
+            while (number_select.hasChildNodes()) {
+                number_select.removeChild(number_select.firstChild);
+            }
+
+
+            let serial_number = document.getElementById("serial_number");
+            serial_number.value = "";
+            serial_number.text = "1";
+            let serial_recipe = document.getElementById("serial_recipe");
+            serial_recipe.value = "";
+            serial_recipe.text = "1";
+
+            XHR.onreadystatechange = function () {
+                //if Response finish and success
+                if (XHR.readyState === 4 && XHR.status === 200) {
+                    {#console.log(XHR.responseText);#}
+                    if (XHR.responseText && !(XHR.responseText === '0')) {
+                        let recipes = XHR.responseText.split('_');
+
+                        for (let i = 0; i < recipes.length; i++) {
+                            let recipe = document.createElement('a');
+                            recipe.text = recipe.value = recipes[i];
+                            recipe.setAttribute("class", "dropdown-item");
+                            recipe.setAttribute("href", "#");
+                            recipes_select.appendChild(recipe);
+                        }
+
+                        let recipe = document.createElement('a');
+                        recipe.text = recipe.value = "All";
+                        recipe.setAttribute("class", "dropdown-item");
+                        recipe.setAttribute("href", "#");
+                        recipes_select.appendChild(recipe);
+                    } else {
+                        alert("No recipe on that day!");
+                        document.getElementById("serial_recipe").value = "";
+                        document.getElementById("serial_number").value = "";
+                    }
+                }
+            };
+
+        });
+
+        document.getElementById("recipes_dropdown").addEventListener("click", function (event) {
+            //console.log(event);
+            let serial_recipe = document.getElementById("serial_recipe");
+            serial_recipe.value = event.toElement.value;
+            serial_recipe.text = "2";
+
+            let number_select = document.getElementById("number_dropdown");
+            while (number_select.hasChildNodes()) {
+                number_select.removeChild(number_select.firstChild);
+            }
+
+            let serial_number = document.getElementById("serial_number");
+            serial_number.value = "";
+            serial_number.text = "1";
+
+            if (event.toElement.value === "All") {
+                return;
+            }
+
+            //Query how many circles of that recipe.
+            let XHR2 = new XMLHttpRequest();
+            let result = {};
+            result['date'] = $('#search_date').val();
+            result['recipe'] = event.toElement.value;
+            let pay_load = {"new_result": result};
+            XHR2.open('POST', '/api/get_recipe_number');
+            XHR2.setRequestHeader('content-type', 'application/json');  //先open再设置请求头
+            XHR2.send(JSON.stringify(pay_load));
+
+
+            XHR2.onreadystatechange = function () {
+                //if Response finish and success
+                if (XHR2.readyState === 4 && XHR2.status === 200) {
+                    {#console.log(XHR.responseText);#}
+                    if (XHR2.responseText && !(XHR2.responseText === '0')) {
+                        let number = parseInt(XHR2.responseText);
+
+                        for (let i = 1; i <= number; i++) {
+                            let number = document.createElement('a');
+                            number.text = number.value = i.toString();
+                            number.setAttribute("class", "dropdown-item");
+                            number.setAttribute("href", "#");
+                            document.getElementById("number_dropdown").appendChild(number);
+                        }
+                        let number_all = document.createElement('a');
+                        number_all.text = number_all.value = "All";
+                        number_all.setAttribute("class", "dropdown-item");
+                        number_all.setAttribute("href", "#");
+                        document.getElementById("number_dropdown").appendChild(number_all);
+                    }
+                }
+            };
+            document.getElementById("number_dropdown").addEventListener("click", function (event) {
+                //console.log(event);
+                let serial_number = document.getElementById("serial_number");
+                serial_number.value = event.toElement.value;
+                serial_number.text = "1";
+            });
+
+
+        });
+
+        document.getElementById("search_button").addEventListener("click", function (event) {
+
+            if (document.getElementById("serial_recipe").value === "") {
+                alert("Please select a recipe first!");
+
+            } else if (document.getElementById("serial_recipe").value === "All") {
+                // disable button
+                {#$(this).prop("disabled", true);#}
+                // add spinner to button
+                $(this).html(
+                    `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
+                );
+                {#document.getElementById("loading").style = "visibility: visible";#}
+                let select_date = $('#search_date').val();
+                search_by_date(select_date);
+            } else if (document.getElementById("serial_number").value === "") {
+                alert("Please select which circle of the recipe!");
+
+            } else if (document.getElementById("serial_number").value === "All") {
+                {#document.getElementById("loading").style = "visibility: visible";#}
+                {# $(this).prop("disabled", true);#}
+                // add spinner to button
+                $(this).html(
+                    `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
+                );
+                let select_date = $('#search_date').val();
+                search_by_date_recipe(select_date, document.getElementById("serial_recipe").value);
+            } else {
+                {#document.getElementById("loading").style = "visibility: visible";#}
+                {#$(this).prop("disabled", true);#}
+                // add spinner to button
+                $(this).html(
+                    `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
+                );
+                let select_date = $('#search_date').val();
+                search_by_date_recipe_number(select_date, document.getElementById("serial_recipe").value, document.getElementById("serial_number").value);
+            }
+        });
+
+
+    </script>
+
+
+
+{% endblock javascripts %}
