@@ -1,6 +1,6 @@
 # Flask-Data-Visualization
 
-This project is a promising showcase about data visualization for industrial manufacture factories, being affordable, easy to use and simple to conduct.<br/>
+This project is a promising showcase about data visualization for industrial manufacture factories, being affordable, intuitive and easy to conduct.<br/>
 <img title="Screen display of the Web application" width="700" src="gif.gif">
 
 Live demo: https://data-visualization-flask.herokuapp.com<br/> 
