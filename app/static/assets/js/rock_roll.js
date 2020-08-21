@@ -365,13 +365,13 @@ function plotGraphs(ot_dates, ot_values, mt_dates, mt_values, ct_dates, ct_value
         let str;
         for (str of labels_str.split("_")) {
             if (str === '1.0') {
-                labels.push('Recipe 1')
+                labels.push('1200 x 6 Pipe v1')
             } else if (str === '2.0') {
-                labels.push('Recipe 2')
+                labels.push('1000 pipe v6')
             } else if (str === '3.0') {
-                labels.push('Recipe 3')
+                labels.push('645-800 pipe v1')
             } else if (str === '4.0') {
-                labels.push('Recipe 4')
+                labels.push('1200 x 5 Pipe v1')
             }
         }
         label_points = label_points_str.split("_");
@@ -381,6 +381,25 @@ function plotGraphs(ot_dates, ot_values, mt_dates, mt_values, ct_dates, ct_value
 
     CombineMTandCTandOT(CT_newDataList, CT_newTimeList, MT_newDataList, MT_newTimeList, OT_newDataList, OT_newTimeList, combineDataList_CT, combineDataList_MT, combineDataList_OT, combineTimeList);
 
+
+    $('#CT_MT_mix_line_chart').hover(function (e) {
+        // $('.chart--root').css('pointer-events', 'none')
+        console.log(e.type);
+        if (e.type === 'mouseenter' && entering === false) {
+            entering = true;
+            console.log("showLabel = false");
+            showLabel = false;
+            CT_MT_mix_chart.update();
+        } else if (e.type === 'mouseleave' && leaving === false) {
+            leaving = true;
+            console.log("showLabel = true");
+            showLabel = true;
+            CT_MT_mix_chart.update();
+        }
+    });
+
+    let zooming = false;
+    let panning = false;
     const CT_MT_mix_chart = new Chart(CT_MT_mix_line_chart, {
         // The type of chart we want to create
         type: 'line',
@@ -425,28 +444,17 @@ function plotGraphs(ot_dates, ot_values, mt_dates, mt_values, ct_dates, ct_value
         options: {
             animation: {
                 onComplete: function () {
-                    if (labels_str !== undefined) {
+                    if (labels_str !== undefined && !zooming && !panning) {
                         entering = false;
                         leaving = false;
-                        if (showLabel) {
+                        if (showLabel && !drawingLabel) {
+                            console.log("showLabel");
+                            drawingLabel = true;
                             for (let i = 0; i < labels.length; i++) {
-                                setTimeout(drawTooltip('#E80A15', '#E80A15', label_points[i], this, labels[i]), 50);
+                                setTimeout(drawTooltip('#F25961', '#F25961', label_points[i], this, labels[i]), 50);
                             }
+                            drawingLabel = false;
                         }
-                        $('#CT_MT_mix_line_chart').hover(function (e) {
-                            // $('.chart--root').css('pointer-events', 'none')
-                            if (e.type === 'mouseenter' && entering === false) {
-                                entering = true;
-                                console.log("mouseenter");
-                                showLabel = false;
-                                CT_MT_mix_chart.update();
-                            } else if (e.type === 'mouseleave' && leaving === false) {
-                                leaving = true;
-                                console.log("mouseleave");
-                                showLabel = true;
-                                CT_MT_mix_chart.update();
-                            }
-                        });
                     }
                 }
             },
@@ -488,7 +496,6 @@ function plotGraphs(ot_dates, ot_values, mt_dates, mt_values, ct_dates, ct_value
                         maxRotation: 0,
                         autoSkipPadding: 10
                     },
-
                     gridLines: {
                         display: true
                     }
@@ -501,21 +508,64 @@ function plotGraphs(ot_dates, ot_values, mt_dates, mt_values, ct_dates, ct_value
                 padding: {left: 15, right: 15, top: 15, bottom: 15}
             },
             tooltips: {
-                enabled: true,
+                enabled: (!zooming && !panning),
                 bodySpacing: 4,
-                mode: "nearest",
-                intersect: 0,
-                position: "nearest",
+                intersect: false,
                 xPadding: 10,
                 yPadding: 10,
                 caretPadding: 10,
-                // callbacks: {
-                //     label: function (tooltipItems, data) {
-                //         let multiStringText = [tooltipItems.yLabel];
-                //         multiStringText.push(findNearestOTorMT(tooltipItems, combineTimeList, combineDataList_MT, combineDataList_OT));
-                //         return multiStringText;
-                //     }
-                // }
+                callbacks: {
+                    label: function (tooltipItems, data) {
+                        let multiStringText = [tooltipItems.yLabel];
+                        if (combineDataList_CT[tooltipItems.index] !== tooltipItems.yLabel) {
+                            setTimeout(multiStringText.push(findNearestOTorMT(tooltipItems, combineTimeList, combineDataList_MT, combineDataList_OT, MT_newDataList, MT_newTimeList, OT_newDataList, OT_newTimeList)), 50);
+                        }
+                        return multiStringText;
+                    }
+                }
+            },
+            plugins: {
+                zoom: {
+                    // Container for pan options
+                    pan: {
+                        // Boolean to enable panning
+                        enabled: true,
+
+                        // Panning directions. Remove the appropriate direction to disable
+                        // Eg. 'y' would only allow panning in the y direction
+                        mode: 'x',
+                        // Function called while the user is panning
+                        onPan: function ({chart}) {
+                            // console.log(`I'm panning!!!`);
+                            panning = true;
+                        },
+                        // Function called once panning is completed
+                        onPanComplete: function ({chart}) {
+                            // console.log(`I was panned!!!`);
+                            panning = false;
+                        }
+                    },
+
+                    // Container for zoom options
+                    zoom: {
+                        // Boolean to enable zooming
+                        enabled: true,
+
+                        // Zooming directions. Remove the appropriate direction to disable
+                        // Eg. 'y' would only allow zooming in the y direction
+                        mode: 'x',
+                        onZoom: function ({chart}) {
+                            // console.log(`I'm zooming!!!`);
+                            zooming = true;
+
+                        },
+                        // Function called once zooming is completed
+                        onZoomComplete: function ({chart}) {
+                            // console.log(`I was zoomed!!!`);
+                            zooming = false;
+                        }
+                    }
+                }
             }
         }
     });
@@ -600,8 +650,8 @@ function plotGraphs(ot_dates, ot_values, mt_dates, mt_values, ct_dates, ct_value
             //         });
             //     }
             // },
-            responsive: true,
             responsiveAnimationDuration: 0, // animation duration after a resize
+            responsive: true,
             maintainAspectRatio: false,
             legend: {
                 position: 'bottom',
@@ -653,7 +703,8 @@ function plotGraphs(ot_dates, ot_values, mt_dates, mt_values, ct_dates, ct_value
             layout: {
                 padding: {left: 15, right: 15, top: 15, bottom: 15}
             },
-            tooltip: {
+            tooltips: {
+                enabled: true,
                 bodySpacing: 4,
                 mode: "nearest",
                 intersect: 0,
@@ -661,6 +712,29 @@ function plotGraphs(ot_dates, ot_values, mt_dates, mt_values, ct_dates, ct_value
                 xPadding: 10,
                 yPadding: 10,
                 caretPadding: 10
+            },
+            plugins: {
+                zoom: {
+                    // Container for pan options
+                    pan: {
+                        // Boolean to enable panning
+                        enabled: true,
+
+                        // Panning directions. Remove the appropriate direction to disable
+                        // Eg. 'y' would only allow panning in the y direction
+                        mode: 'x'
+                    },
+
+                    // Container for zoom options
+                    zoom: {
+                        // Boolean to enable zooming
+                        enabled: true,
+
+                        // Zooming directions. Remove the appropriate direction to disable
+                        // Eg. 'y' would only allow zooming in the y direction
+                        mode: 'x',
+                    }
+                }
             }
         }
     });
@@ -710,8 +784,8 @@ function plotGraphs(ot_dates, ot_values, mt_dates, mt_values, ct_dates, ct_value
 
         //Configuration options go here
         options: {
-            responsive: true,
             responsiveAnimationDuration: 0, // animation duration after a resize
+            responsive: true,
             maintainAspectRatio: false,
             legend: {
                 position: 'bottom',
@@ -763,7 +837,8 @@ function plotGraphs(ot_dates, ot_values, mt_dates, mt_values, ct_dates, ct_value
             layout: {
                 padding: {left: 15, right: 15, top: 15, bottom: 15}
             },
-            tooltip: {
+            tooltips: {
+                enabled: true,
                 bodySpacing: 4,
                 mode: "nearest",
                 intersect: 0,
@@ -771,6 +846,29 @@ function plotGraphs(ot_dates, ot_values, mt_dates, mt_values, ct_dates, ct_value
                 xPadding: 10,
                 yPadding: 10,
                 caretPadding: 10
+            },
+            plugins: {
+                zoom: {
+                    // Container for pan options
+                    pan: {
+                        // Boolean to enable panning
+                        enabled: true,
+
+                        // Panning directions. Remove the appropriate direction to disable
+                        // Eg. 'y' would only allow panning in the y direction
+                        mode: 'x'
+                    },
+
+                    // Container for zoom options
+                    zoom: {
+                        // Boolean to enable zooming
+                        enabled: true,
+
+                        // Zooming directions. Remove the appropriate direction to disable
+                        // Eg. 'y' would only allow zooming in the y direction
+                        mode: 'x',
+                    }
+                }
             }
         }
     });
@@ -1537,6 +1635,8 @@ function CombineMTandCTandOT(CT_DataList, CT_TimeList, MT_DataList, MT_TimeList,
 // });
 
 let showLabel = true;
+let drawingLabel = false;
+let hasDefineCallback = false;
 let entering = false;
 let leaving = false;
 
@@ -1614,61 +1714,45 @@ var drawTooltip = function (dotColor, textColor, xAxis, chartbody, label) {
     }
 };
 
-function findNearestOTorMT(tooltipItems, combineTimeList, combineDataList_MT, combineDataList_OT) {
-    if (combineDataList_MT[tooltipItems.index] === tooltipItems.yLabel) {
-        let OTValues = combineDataList_OT[tooltipItems.index];
 
-        if (OTValues != null) {
-            return "Oven Temperature: " + OTValues + " at " + combineTimeList[tooltipItems.index]
+function findNearestOTorMT(tooltipItems, combineTimeList, combineDataList_MT, combineDataList_OT, MT_newDataList, MT_newTimeList, OT_newDataList, OT_newTimeList) {
+    if (combineDataList_MT[tooltipItems.index] === tooltipItems.yLabel) {// Current point is MT
+        let MTTime = combineTimeList[tooltipItems.index];
+        let OT_index = OT_newTimeList.indexOf(MTTime);
+        if (OT_index !== -1) {
+            return "Oven Temperature = " + OT_newDataList[OT_index] + " at " + MTTime
         } else {
-            let forwardIndex, backwardIndex; // Record how far seeking forward and backward
-            let forwardValue, backwardValue; // Record nearest value forward and backward
-            for (forwardIndex = tooltipItems.index; forwardIndex < combineDataList_OT.length; forwardIndex++) {
-                if (combineDataList_OT[forwardIndex] != null) {
-                    forwardValue = combineDataList_OT[forwardIndex];
-                    break;
+            let min_interval = 24 * 60 * 60;
+            let min_index = -1;
+            for (OT_index = 0; OT_index < OT_newTimeList.length; OT_index++) {
+                let OT_time = OT_newTimeList[OT_index];
+                let interval = Math.abs(transformDateTimestamp(OT_time) - transformDateTimestamp(MTTime));
+                if (interval < min_interval && OT_newDataList[OT_index] !== null) {
+                    min_interval = interval;
+                    min_index = OT_index;
                 }
             }
-            for (backwardIndex = tooltipItems.index; backwardIndex >= 0; backwardIndex--) {
-                if (combineDataList_OT[backwardIndex] != null) {
-                    backwardValue = combineDataList_OT[backwardIndex];
-                    break;
-                }
-            }
-            if (Math.abs(tooltipItems.index - forwardIndex) >= Math.abs(tooltipItems.index - backwardIndex)) {
-                // The nearest point is forward than current point
-                return "Oven Temperature: " + forwardValue + " at " + combineTimeList[forwardIndex]
-            } else {
-                // The nearest point is backward than current point
-                return "Oven Temperature: " + backwardValue + " at " + combineTimeList[backwardIndex]
-            }
+            return "Oven Temperature = " + OT_newDataList[min_index] + " at " + OT_newTimeList[min_index];
         }
-    } else {
-        let MTValues = combineDataList_MT[tooltipItems.index];
-        if (MTValues != null) {
-            return "Mould Temperature: " + MTValues + " at " + combineTimeList[tooltipItems.index]
+    } else { // Current point is OT
+        let OTTime = combineTimeList[tooltipItems.index];
+        let MT_index = MT_newTimeList.indexOf(OTTime);
+        if (MT_index !== -1) {
+            return "Mould Temperature = " + MT_newDataList[MT_index] + " at " + OTTime
         } else {
-            let forwardIndex, backwardIndex; // Record how far seeking forward and backward
-            let forwardValue, backwardValue; // Record nearest value forward and backward
-            for (forwardIndex = tooltipItems.index; forwardIndex < combineDataList_MT.length; forwardIndex++) {
-                if (combineDataList_MT[forwardIndex] != null) {
-                    forwardValue = combineDataList_MT[forwardIndex];
-                    break;
+            let min_interval = 24 * 60 * 60;
+            let min_index = -1;
+            for (MT_index = 0; MT_index < MT_newTimeList.length; MT_index++) {
+                let MT_time = MT_newTimeList[MT_index];
+                let interval = Math.abs(transformDateTimestamp(MT_time) - transformDateTimestamp(OTTime));
+                if (interval < min_interval && MT_newDataList[MT_index] !== null) {
+                    min_interval = interval;
+                    min_index = MT_index;
                 }
             }
-            for (backwardIndex = tooltipItems.index; backwardIndex >= 0; backwardIndex--) {
-                if (combineDataList_MT[backwardIndex] != null) {
-                    backwardValue = combineDataList_MT[backwardIndex];
-                    break;
-                }
-            }
-            if (Math.abs(tooltipItems.index - forwardIndex) >= Math.abs(tooltipItems.index - backwardIndex)) {
-                // The nearest point is forward than current point
-                return "Mould Temperature: " + forwardValue + " at " + combineTimeList[forwardIndex]
-            } else {
-                // The nearest point is backward than current point
-                return "Mould Temperature: " + backwardValue + " at " + combineTimeList[backwardIndex]
-            }
+            return "Mould Temperature = " + MT_newDataList[min_index] + " at " + MT_newTimeList[min_index];
         }
+
+
     }
-}
+};
