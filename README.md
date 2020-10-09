@@ -14,7 +14,7 @@ Live demo: https://data-visualization-flask.herokuapp.com<br/>
 [Web application](https://data-visualization-flask.herokuapp.com/rock_roll_charts.html): We utilize Flask and Chart.js to conduct this web application, retrieving data from a SQLite DB file which is storaged on Google G Suite location. You can look into charts of manufacture data by date, recipe and which time in a day; also, you can dig in points of data by hovering on the curve; and normally, one machinery might have different recipes to manufacture in one day, so that we add recipe marker on the start point of each cycle.
 
 ### Update
-**21.08.2020:** Added a zooming function for graphs and code for displaying other fields when hovering on a field such as display mould temperature when hovering on oven temperature with the nearest timestamp.
+**21.08.2020:** Added a zooming function for graphs and code for displaying other fields when hovering on a field such as display mould temperature when hovering on oven temperature with the nearest timestamp.<br/>
 **09.10.2020** Added another page for the second which is a moulding machine with 4 arms, each arm can install different moulds with different recipes. Also, the machine can rotate horizontally and extand the arm into an oven that heats the arm. We collect data from the oven and four arms utilizing a Python script and plot them on a new page; and, we display current machine setting on the top of the page, which mean design engineer do not need to go down to the factory but still can know what latest setting is.
 
 
