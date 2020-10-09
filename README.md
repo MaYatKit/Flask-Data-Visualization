@@ -1,7 +1,9 @@
 # Flask-Data-Visualization
 
 This project is a promising showcase about data visualization for industrial manufacture factories, being affordable, intuitive and easy to conduct.<br/>
-<img title="Screen display of the Web application" width="700" src="gif.gif">
+<img title="Screen display of the Web application" width="700" src="gif.gif"><br/><br/>
+Zoom & drag and displaying other field data when hovering: (**21.08.2020 update**)<br/>
+<img title="Screen display of the Web application" width="700" src="zoom.gif">
 
 Live demo: https://data-visualization-flask.herokuapp.com<br/> 
 ### Description of two main components are the following: <br/>
