@@ -21,4 +21,5 @@ Display current setting and plot updated data for a moulding machine: (**09.10.2
 
 ### Future work
 A zooming function for graphs is scheduled and we plan to display other fields when hovering on a field such as display mould temperature when hovering on oven temperature with the nearest timestamp; also, a CSV export function which can be choosed field and range is being considered.<br/>
-**21.08.2020:** We plan to optimize the speed of zooming.
+**21.08.2020:** We plan to optimize the speed of zooming.<br/>
+**09.10.2020** We plan to add functions to record abnormal manufacture cycles and use machine learning to predict result of a machine setting.  
