@@ -433,13 +433,13 @@ def get_recipe_number():
     recipe = json_text['new_result']['recipe']
 
     recipe_number = 0
-    if recipe == 'Recipe 1':
+    if recipe == '1200 x 6 Pipe v1':
         recipe_number = 1.0
-    elif recipe == 'Recipe 2':
+    elif recipe == '1000 pipe v6':
         recipe_number = 2.0
-    elif recipe == 'Recipe 3':
+    elif recipe == '645-800 pipe v1':
         recipe_number = 3.0
-    elif recipe == 'Recipe 4':
+    elif recipe == '1200 x 5 Pipe v1':
         recipe_number = 4.0
 
     search_date = date.replace("-", ".")
@@ -493,7 +493,7 @@ def get_recipe_number():
     return str(count)
 
 
-def sortByTime(all): # Sort data by TIME_MS field
+def sortByTime(all):  # Sort data by TIME_MS field
     for each in all:
         each.TIME_MS = int(str(each.TIME_MS).ljust(15, '0'))  # Append zeros to make up to 15 bit for TIME_MS field
     all.sort(key=operator.attrgetter('TIME_MS'))
@@ -510,11 +510,8 @@ def search_by_date():
     date = date.replace('-', '.')
 
     # column names
-    names = []
     dates = []
     values = []
-    validities = []
-    mills = []
 
     # -------Oven_Temperature_PV--------
     search = "%{}%".format(date)
@@ -522,130 +519,113 @@ def search_by_date():
 
     ot_all = sortByTime(ot_all)
     # read all data on the latest day
+    last_time = 0
     for each in ot_all:
         # print(ot_each)
-        names.append(each.VAR_NAME)
+        current_time = transform_date_timestamp(each.TIME_STRING.split(" ")[1])
+        if current_time - last_time <= 10:  # Every 10s record a data
+            continue
         dates.append(each.TIME_STRING)
         values.append(each.VAR_VALUE)
-        validities.append(each.VALIDITY)
-        mills.append(each.TIME_MS)
-    ot_names_str = '_'.join(names)
+        last_time = current_time
+
     ot_dates_str = '_'.join(dates)
     ot_values_str = '_'.join(str(e) for e in values)  # Convert float to str
-    ot_validities_str = '_'.join(str(e) for e in validities)  # Convert float to str
-    ot_mills_str = '_'.join(str(e) for e in mills)  # Convert float to str
 
-    result = ot_names_str + ',' + ot_dates_str + ',' + ot_values_str + ',' + ot_validities_str + ',' + ot_mills_str
+    result = ot_dates_str + ',' + ot_values_str
 
     # --------Mould_Temperature_PV-------
     mt_all = MouldTemp.query.filter(MouldTemp.TIME_STRING.like(search)).all()
     mt_all = sortByTime(mt_all)
 
     # column names
-    names.clear()
     mt_dates = []
     mt_values = []
-    validities.clear()
-    mills.clear()
 
+    last_time = 0
     for each in mt_all:
         # print(mt_each)
-        names.append(each.VAR_NAME)
+        current_time = transform_date_timestamp(each.TIME_STRING.split(" ")[1])
+        if current_time - last_time <= 10:  # Every 10s record a data
+            continue
         mt_dates.append(each.TIME_STRING)
         mt_values.append(each.VAR_VALUE)
-        validities.append(each.VALIDITY)
-        mills.append(each.TIME_MS)
+        last_time = current_time
 
-    mt_names_str = '_'.join(names)
     mt_dates_str = '_'.join(mt_dates)
     mt_values_str = '_'.join(str(e) for e in mt_values)  # Convert float to str
-    mt_validities_str = '_'.join(str(e) for e in validities)  # Convert float to str
-    mt_mills_str = '_'.join(str(e) for e in mills)  # Convert float to str
 
-    result = result + ";" + mt_names_str + ',' + mt_dates_str + ',' + mt_values_str + ',' + mt_validities_str + ',' + mt_mills_str
+    result = result + ";" + mt_dates_str + ',' + mt_values_str
 
     # -------Cooling_Temperature_PV--------
     ct_all = CoolingTemp.query.filter(CoolingTemp.TIME_STRING.like(search)).all()
 
     ct_all = sortByTime(ct_all)
     # column names
-    names.clear()
     dates.clear()
     values = []
-    validities = []
-    mills = []
 
     # read all data on the latest day
+    last_time = 0
     for each in ct_all:
         # print(mt_each)
-        names.append(each.VAR_NAME)
+        current_time = transform_date_timestamp(each.TIME_STRING.split(" ")[1])
+        if current_time - last_time <= 10:  # Every 10s record a data
+            continue
         dates.append(each.TIME_STRING)
         values.append(each.VAR_VALUE)
-        validities.append(each.VALIDITY)
-        mills.append(each.TIME_MS)
+        last_time = current_time
 
-    ct_names_str = '_'.join(names)
     ct_dates_str = '_'.join(dates)
     ct_values_str = '_'.join(str(e) for e in values)  # Convert float to str
-    ct_validities_str = '_'.join(str(e) for e in validities)  # Convert float to str
-    ct_mills_str = '_'.join(str(e) for e in mills)  # Convert float to str
 
-    result = result + ";" + ct_names_str + ',' + ct_dates_str + ',' + ct_values_str + ',' + ct_validities_str + ',' + ct_mills_str
+    result = result + ";" + ct_dates_str + ',' + ct_values_str
 
     # ----------------Rock_Angle_PV------------------
     rock_a_all = RockAngle.query.filter(RockAngle.TIME_STRING.like(search)).all()
     rock_a_all = sortByTime(rock_a_all)
 
-
     # column names
-    names.clear()
     dates.clear()
     values.clear()
-    validities.clear()
-    mills.clear()
 
     # read all data on the latest day
+    last_time = 0
     for each in rock_a_all:
         # print(mt_each)
-        names.append(each.VAR_NAME)
+        current_time = transform_date_timestamp(each.TIME_STRING.split(" ")[1])
+        if current_time - last_time <= 10:  # Every 10s record a data
+            continue
         dates.append(each.TIME_STRING)
         values.append(each.VAR_VALUE)
-        validities.append(each.VALIDITY)
-        mills.append(each.TIME_MS)
+        last_time = current_time
 
-    rock_a_names_str = '_'.join(names)
     rock_a_dates_str = '_'.join(dates)
     rock_a_values_str = '_'.join(str(e) for e in values)  # Convert float to str
-    rock_a_validities_str = '_'.join(str(e) for e in validities)  # Convert float to str
-    rock_a_mills_str = '_'.join(str(e) for e in mills)  # Convert float to str
 
-    result = result + ";" + rock_a_names_str + ',' + rock_a_dates_str + ',' + rock_a_values_str + ',' + rock_a_validities_str + ',' + rock_a_mills_str
+    result = result + ";" + rock_a_dates_str + ',' + rock_a_values_str
 
     # ----------------Roll_Angle_PV-----------------
     roll_a_all = RollAngle.query.filter(RollAngle.TIME_STRING.like(search)).all()
     roll_a_all = sortByTime(roll_a_all)
 
     # column names
-    names.clear()
     dates.clear()
     values.clear()
-    validities.clear()
-    mills.clear()
 
     # read all data on the latest day
+    last_time = 0
     for each in roll_a_all:
         # print(mt_each)
-        names.append(each.VAR_NAME)
+        current_time = transform_date_timestamp(each.TIME_STRING.split(" ")[1])
+        if current_time - last_time <= 10:  # Every 10s record a data
+            continue
         dates.append(each.TIME_STRING)
         values.append(each.VAR_VALUE)
-        validities.append(each.VALIDITY)
-        mills.append(each.TIME_MS)
+        last_time = current_time
 
-    roll_a_names_str = '_'.join(names)
     roll_a_dates_str = '_'.join(dates)
     roll_a_values_str = '_'.join(str(e) for e in values)  # Convert float to str
-    roll_a_validities_str = '_'.join(str(e) for e in validities)  # Convert float to str
-    roll_a_mills_str = '_'.join(str(e) for e in mills)  # Convert float to str
 
     recipes = RecipeNumber.query.filter(RecipeNumber.TIME_STRING.like(search)).all()
     # Save time intervals between target recipe and next recipe
@@ -705,7 +685,7 @@ def search_by_date():
     label_points_str = "_".join(label_points)
     labels_str = "_".join(labels)
 
-    result = result + ";" + roll_a_names_str + ',' + roll_a_dates_str + ',' + roll_a_values_str + ',' + roll_a_validities_str + ',' + roll_a_mills_str
+    result = result + ";" + roll_a_dates_str + ',' + roll_a_values_str
     result = result + ';' + label_points_str + ';' + labels_str  # Add label point
 
     return result
@@ -720,13 +700,13 @@ def search_by_date_recipe():
     recipe = json_text['new_result']['recipe']
 
     recipe_number = 0
-    if recipe == 'Recipe 1':
+    if recipe == '1200 x 6 Pipe v1':
         recipe_number = 1.0
-    elif recipe == 'Recipe 2':
+    elif recipe == '1000 pipe v6':
         recipe_number = 2.0
-    elif recipe == 'Recipe 3':
+    elif recipe == '645-800 pipe v1':
         recipe_number = 3.0
-    elif recipe == 'Recipe 4':
+    elif recipe == '1200 x 5 Pipe v1':
         recipe_number = 4.0
 
     search_date = date.replace("-", ".")
@@ -765,11 +745,21 @@ def search_by_date_recipe():
         if recipes[i].VAR_VALUE == recipe_number:
             recipe_index.append(i)
 
-    # Count recipes which is set in last day
-    lastday_recipes = RecipeNumber.query.filter(RecipeNumber.rowid.like(recipes[0].rowid - 1)).all()
-    if len(lastday_recipes) != 0:
-        if lastday_recipes[0].VAR_VALUE == recipe_number:
-            recipe_index.append(-1)
+    # --------Mould_Temperature_PV-------
+    mt_all = MouldTemp.query.filter(MouldTemp.TIME_STRING.like(search)).all()
+    mt_all = sortByTime(mt_all)
+    mould_boot_time = 0  # First time stamp of mould temperature that bigger than 10
+    for each in mt_all:
+        if each.VAR_VALUE > 10:
+            mould_boot_time = transform_date_timestamp(each.TIME_STRING.split(" ")[1])
+            break
+
+    if mould_boot_time < transform_date_timestamp(recipes[0].TIME_STRING.split(" ")[1]):
+        # Count recipes which is set in last day
+        # lastday_recipes = RecipeNumber.query.filter(RecipeNumber.rowid.like(recipes[0].rowid - 1)).all()
+        if len(lastday_recipes) != 0:
+            if lastday_recipes[0].VAR_VALUE == recipe_number:
+                recipe_index.append(-1)
 
     time_maps = {}
     if len(recipes) == 1:
@@ -821,84 +811,62 @@ def search_by_date_recipe():
                     break
 
     # column names
-    names = []
     dates = []
     values = []
-    validities = []
-    mills = []
-
-    # --------Mould_Temperature_PV-------
-    mt_all = MouldTemp.query.filter(MouldTemp.TIME_STRING.like(search)).all()
-    mt_all = sortByTime(mt_all)
-
 
     # column names
-    names.clear()
     mt_dates = []
     mt_values = []
-    validities.clear()
-    mills.clear()
 
+    last_time = 0
     for each in mt_all:
         time_stamp = transform_date_timestamp(each.TIME_STRING.split(" ")[1])
+        current_time = time_stamp
+        if current_time - last_time <= 10:  # Every 10s record a data
+            continue
         exist = 0
         for internal in recipe_map:
             if internal < time_stamp < recipe_map[internal]:
-                names.append(each.VAR_NAME)
                 mt_dates.append(each.TIME_STRING)
                 mt_values.append(each.VAR_VALUE)
-                validities.append(each.VALIDITY)
-                mills.append(each.TIME_MS)
+                last_time = current_time
                 exist = 1
                 break
         if exist == 0:
-            names.append(each.VAR_NAME)
             mt_dates.append(each.TIME_STRING)
             mt_values.append(0)
-            validities.append(each.VALIDITY)
-            mills.append(each.TIME_MS)
 
-    mt_names_str = '_'.join(names)
     mt_dates_str = '_'.join(mt_dates)
     mt_values_str = '_'.join(str(e) for e in mt_values)  # Convert float to str
-    mt_validities_str = '_'.join(str(e) for e in validities)  # Convert float to str
-    mt_mills_str = '_'.join(str(e) for e in mills)  # Convert float to str
 
     # -------Cooling_Temperature_PV--------
     ct_all = CoolingTemp.query.filter(CoolingTemp.TIME_STRING.like(search)).all()
     ct_all = sortByTime(ct_all)
 
     # column names
-    names.clear()
     ct_dates = []
     ct_values = []
-    validities = []
-    mills = []
     # read all data on the latest day
+    last_time = 0
     for each in ct_all:
-        exist = 0
         time_stamp = transform_date_timestamp(each.TIME_STRING.split(" ")[1])
+        current_time = time_stamp
+        if current_time - last_time <= 10:  # Every 10s record a data
+            continue
+        exist = 0
         for start in time_maps:
             if start < time_stamp < time_maps[start]:
-                names.append(each.VAR_NAME)
                 ct_dates.append(each.TIME_STRING)
                 ct_values.append(each.VAR_VALUE)
-                validities.append(each.VALIDITY)
-                mills.append(each.TIME_MS)
+                last_time = current_time
                 exist = 1
                 break
         if exist == 0:
-            names.append(each.VAR_NAME)
             ct_dates.append(each.TIME_STRING)
             ct_values.append(0)
-            validities.append(each.VALIDITY)
-            mills.append(each.TIME_MS)
 
-    ct_names_str = '_'.join(names)
     ct_dates_str = '_'.join(ct_dates)
     ct_values_str = '_'.join(str(e) for e in ct_values)  # Convert float to str
-    ct_validities_str = '_'.join(str(e) for e in validities)  # Convert float to str
-    ct_mills_str = '_'.join(str(e) for e in mills)  # Convert float to str
 
     # Find time ranges between mould temperature circle and cooling circle
     oven_time_map = {}
@@ -917,55 +885,51 @@ def search_by_date_recipe():
     ot_all = OvenTemp.query.filter(OvenTemp.TIME_STRING.like(search)).all()
     ot_all = sortByTime(ot_all)
 
-
     # read all data on the latest day
+    last_time = 0
     for each in ot_all:
         # print(ot_each)
+        time_stamp = transform_date_timestamp(each.TIME_STRING.split(" ")[1])
+        current_time = time_stamp
+        if current_time - last_time <= 10:  # Every 10s record a data
+            continue
         exist = 0
         for start in oven_time_map:
-            if transform_date_timestamp(start.split(" ")[1]) <= transform_date_timestamp(
-                    each.TIME_STRING.split(" ")[1]) <= transform_date_timestamp(oven_time_map[start].split(" ")[1]):
-                names.append(each.VAR_NAME)
+            if transform_date_timestamp(start.split(" ")[1]) <= time_stamp <= transform_date_timestamp(
+                    oven_time_map[start].split(" ")[1]):
                 dates.append(each.TIME_STRING)
                 values.append(each.VAR_VALUE)
-                validities.append(each.VALIDITY)
-                mills.append(each.TIME_MS)
+                last_time = current_time
                 exist = 1
                 break
         if exist == 0:
-            names.append(each.VAR_NAME)
             dates.append(each.TIME_STRING)
             values.append(0)
-            validities.append(each.VALIDITY)
-            mills.append(each.TIME_MS)
 
-    ot_names_str = '_'.join(names)
     ot_dates_str = '_'.join(dates)
     ot_values_str = '_'.join(str(e) for e in values)  # Convert float to str
-    ot_validities_str = '_'.join(str(e) for e in validities)  # Convert float to str
-    ot_mills_str = '_'.join(str(e) for e in mills)  # Convert float to str
 
     # ----------------Rock_Angle_PV------------------
     rock_a_all = RockAngle.query.filter(RockAngle.TIME_STRING.like(search)).all()
     rock_a_all = sortByTime(rock_a_all)
     # column names
-    names.clear()
     dates.clear()
     values.clear()
-    validities.clear()
-    mills.clear()
 
     # read all data on the latest day
+    last_time = 0
     for each in rock_a_all:
+        time_stamp = transform_date_timestamp(each.TIME_STRING.split(" ")[1])
+        current_time = time_stamp
+        if current_time - last_time <= 10:  # Every 10s record a data
+            continue
         # exist = 0
         for start in oven_time_map:
-            if transform_date_timestamp(start.split(" ")[1]) <= transform_date_timestamp(
-                    each.TIME_STRING.split(" ")[1]) <= transform_date_timestamp(oven_time_map[start].split(" ")[1]):
-                names.append(each.VAR_NAME)
+            if transform_date_timestamp(start.split(" ")[1]) <= time_stamp <= transform_date_timestamp(
+                    oven_time_map[start].split(" ")[1]):
                 dates.append(each.TIME_STRING)
                 values.append(each.VAR_VALUE)
-                validities.append(each.VALIDITY)
-                mills.append(each.TIME_MS)
+                last_time = current_time
                 # exist = 1
                 break
         # if exist == 0:
@@ -975,46 +939,40 @@ def search_by_date_recipe():
         #     validities.append(each.VALIDITY)
         #     mills.append(each.TIME_MS)
 
-    rock_a_names_str = '_'.join(names)
     rock_a_dates_str = '_'.join(dates)
     rock_a_values_str = '_'.join(str(e) for e in values)  # Convert float to str
-    rock_a_validities_str = '_'.join(str(e) for e in validities)  # Convert float to str
-    rock_a_mills_str = '_'.join(str(e) for e in mills)  # Convert float to str
 
     # ----------------Roll_Angle_PV-----------------
     roll_a_all = RollAngle.query.filter(RollAngle.TIME_STRING.like(search)).all()
     roll_a_all = sortByTime(roll_a_all)
     # column names
-    names.clear()
     dates.clear()
     values.clear()
-    validities.clear()
-    mills.clear()
 
     # read all data on the latest day
+    last_time = 0
     for each in roll_a_all:
         # print(mt_each)
+        time_stamp = transform_date_timestamp(each.TIME_STRING.split(" ")[1])
+        current_time = time_stamp
+        if current_time - last_time <= 10:  # Every 10s record a data
+            continue
         for start in oven_time_map:
-            if transform_date_timestamp(start.split(" ")[1]) <= transform_date_timestamp(
-                    each.TIME_STRING.split(" ")[1]) <= transform_date_timestamp(oven_time_map[start].split(" ")[1]):
-                names.append(each.VAR_NAME)
+            if transform_date_timestamp(start.split(" ")[1]) <= time_stamp <= transform_date_timestamp(
+                    oven_time_map[start].split(" ")[1]):
                 dates.append(each.TIME_STRING)
                 values.append(each.VAR_VALUE)
-                validities.append(each.VALIDITY)
-                mills.append(each.TIME_MS)
+                last_time = current_time
                 break
 
-    roll_a_names_str = '_'.join(names)
     roll_a_dates_str = '_'.join(dates)
     roll_a_values_str = '_'.join(str(e) for e in values)  # Convert float to str
-    roll_a_validities_str = '_'.join(str(e) for e in validities)  # Convert float to str
-    roll_a_mills_str = '_'.join(str(e) for e in mills)  # Convert float to str
 
-    result = ot_names_str + ',' + ot_dates_str + ',' + ot_values_str + ',' + ot_validities_str + ',' + ot_mills_str
-    result = result + ";" + mt_names_str + ',' + mt_dates_str + ',' + mt_values_str + ',' + mt_validities_str + ',' + mt_mills_str
-    result = result + ";" + ct_names_str + ',' + ct_dates_str + ',' + ct_values_str + ',' + ct_validities_str + ',' + ct_mills_str
-    result = result + ";" + rock_a_names_str + ',' + rock_a_dates_str + ',' + rock_a_values_str + ',' + rock_a_validities_str + ',' + rock_a_mills_str
-    result = result + ";" + roll_a_names_str + ',' + roll_a_dates_str + ',' + roll_a_values_str + ',' + roll_a_validities_str + ',' + roll_a_mills_str
+    result = ot_dates_str + ',' + ot_values_str
+    result = result + ";" + mt_dates_str + ',' + mt_values_str
+    result = result + ";" + ct_dates_str + ',' + ct_values_str
+    result = result + ";" + rock_a_dates_str + ',' + rock_a_values_str
+    result = result + ";" + roll_a_dates_str + ',' + roll_a_values_str
 
     return result
 
@@ -1030,13 +988,13 @@ def search_by_date_recipe_number():
     number = int(number)
 
     recipe_number = 0
-    if recipe == 'Recipe 1':
+    if recipe == '1200 x 6 Pipe v1':
         recipe_number = 1.0
-    elif recipe == 'Recipe 2':
+    elif recipe == '1000 pipe v6':
         recipe_number = 2.0
-    elif recipe == 'Recipe 3':
+    elif recipe == '645-800 pipe v1':
         recipe_number = 3.0
-    elif recipe == 'Recipe 4':
+    elif recipe == '1200 x 5 Pipe v1':
         recipe_number = 4.0
 
     search_date = date.replace("-", ".")
@@ -1416,6 +1374,14 @@ def transform_date_timestamp(time):
     sec = time.split(":")[2]
     time_stamp = int(hour) * 60 * 60 + int(min) * 60 + int(sec)
     return time_stamp
+
+
+def transform_timestamp_time(timeStamp):
+    hour = int(timeStamp / 3600)
+    min = int((timeStamp % 3600) / 60)
+    sec = (timeStamp % 3600) % 60
+    time = str(hour) + ":" + str(min) + ":" + str(sec)
+    return time
 
 
 def search_by_date_recipe_number():

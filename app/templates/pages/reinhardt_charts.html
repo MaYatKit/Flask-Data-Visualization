@@ -4,14 +4,53 @@
 
 {% block stylesheets %}
 
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+
 {% endblock stylesheets %}
 
 {% block content %}
 
     <div class="page-inner">
-        <h4 class="page-title">Rock & Roll Charts</h4>
-        <div class="page-category">Data charts for the Rock & Roll Machine.</div>
+        <h4 class="page-title">Moulding Charts</h4>
+        <div class="page-category">Data charts for the Moulding Machine.</div>
         <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Latest Moulding Recipe Setting</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <table id="reinhardt_setting_table">
+                                <tr>
+                                    <th>ARM</th>
+                                    <th>RECIPE_NO</th>
+                                    <th>TEMPERATURE</th>
+                                    <th>SPEED</th>
+                                    <th>HEAT</th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
@@ -82,78 +121,72 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12">
-                {#                <div class="card">#}
-                {#                    <div class="card-header">#}
-                {#                        <div class="card-title">Oven_Temperature_PV</div>#}
-                {#                    </div>#}
-                {#                    <div class="card-body">#}
-                {#                        <div class="chart-container" id="OT_line_chart_parent">#}
-                {#                            <canvas id="OT_line_chart"></canvas>#}
-                {#                        </div>#}
-                {#                    </div>#}
-                {#                </div>#}
-            </div>
+
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">Mould & Cooling & Oven Temperature</div>
+                        <div class="card-title">Oven Temperature</div>
                     </div>
                     <div class="card-body">
-                        <div class="chart-container" id="CT_MT_mix_line_chart_parent">
-                            <canvas id="CT_MT_mix_line_chart" style="width: 50%; height: 50%"></canvas>
+                        <div class="chart-container" id="rh_OT_line_chart_parent">
+                            <canvas id="rh_OT_line_chart" style="width: 50%; height: 50%"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
-            {#            <div class="col-md-12">#}
-            {#                <div class="card">#}
-            {#                    <div class="card-header">#}
-            {#                        <div class="card-title">Mould_Temperature_PV</div>#}
-            {#                    </div>#}
-            {#                    <div class="card-body">#}
-            {#                        <div class="chart-container" id="MT_line_chart_parent">#}
-            {#                            <canvas id="MT_line_chart"></canvas>#}
-            {#                        </div>#}
-            {#                    </div>#}
-            {#                </div>#}
-            {#            </div>#}
-            {#            <div class="col-md-12">#}
-            {#                <div class="card">#}
-            {#                    <div class="card-header">#}
-            {#                        <div class="card-title">Cooling_Temperature_PV</div>#}
-            {#                    </div>#}
-            {#                    <div class="card-body">#}
-            {#                        <div class="chart-container" id="CT_line_chart_parent">#}
-            {#                            <canvas id="CT_line_chart" style="width: 50%; height: 50%"></canvas>#}
-            {#                        </div>#}
-            {#                    </div>#}
-            {#                </div>#}
-            {#            </div>#}
+
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">Rock_Angle_PV</div>
+                        <div class="card-title">Arm One</div>
                     </div>
                     <div class="card-body">
-                        <div class="chart-container" id="RockA_line_chart_parent">
-                            <canvas id="RockA_line_chart" style="width: 50%; height: 50%"></canvas>
+                        <div class="chart-container" id="arm1_line_chart_parent">
+                            <canvas id="arm1_line_chart" style="width: 50%; height: 50%"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">Roll_Angle_PV</div>
+                        <div class="card-title">Arm Two</div>
                     </div>
                     <div class="card-body">
-                        <div class="chart-container" id="RollA_line_chart_parent">
-                            <canvas id="RollA_line_chart" style="width: 50%; height: 50%"></canvas>
+                        <div class="chart-container" id="arm2_line_chart_parent">
+                            <canvas id="arm2_line_chart" style="width: 50%; height: 50%"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Arm Three</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container" id="arm3_line_chart_parent">
+                            <canvas id="arm3_line_chart" style="width: 50%; height: 50%"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Arm Four</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container" id="arm4_line_chart_parent">
+                            <canvas id="arm4_line_chart" style="width: 50%; height: 50%"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -162,56 +195,30 @@
 {% block javascripts %}
 
     <script src="/static/assets/js/utils.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/static/assets/js/rock_roll.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/static/assets/js/rock_roll_search.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/assets/js/reinhardt.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/assets/js/reinhardt_search.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/assets/js/k-kord.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/assets/js/k-kord_search.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
+        {#debugger;#}
         var Data = {
             {#-------Oven_Temperature_PV--------#}
-            ot_names:{{ ot_names|tojson }},
-            ot_dates:{{ ot_dates|tojson }},
-            ot_values:{{ ot_values|tojson }},
-            ot_validities:{{ ot_validities|tojson }},
-            ot_mills:{{ot_mills|tojson }},
-
-            {#---------Mould_Temperature_PV--------#}
-            mt_names:{{ mt_names|tojson }},
-            mt_dates:{{ mt_dates|tojson }},
-            mt_values:{{ mt_values|tojson }},
-            mt_validities:{{ mt_validities|tojson }},
-            mt_mills:{{mt_mills|tojson }},
-
-            {#-------Cooling_Temperature_PV--------#}
-            ct_names:{{ ct_names|tojson }},
-            ct_dates:{{ ct_dates|tojson }},
-            ct_values:{{ ct_values|tojson }},
-            ct_validities:{{ ct_validities|tojson }},
-            ct_mills:{{ct_mills|tojson }},
-
-            {#------------Rock_Angle_PV------------#}
-            rock_a_names:{{ rock_a_names|tojson }},
-            rock_a_dates:{{ rock_a_dates|tojson }},
-            rock_a_values:{{ rock_a_values|tojson }},
-            rock_a_validities:{{ rock_a_validities|tojson }},
-            rock_a_mills:{{rock_a_mills|tojson }},
-
-            {#------------Roll_Angle_PV------------#}
-            roll_a_names:{{ roll_a_names|tojson }},
-            roll_a_dates:{{ roll_a_dates|tojson }},
-            roll_a_values:{{ roll_a_values|tojson }},
-            roll_a_validities:{{ roll_a_validities|tojson }},
-            roll_a_mills:{{roll_a_mills|tojson }},
-
-            {#------------Labels------------#}
-            label_points_str:{{ label_points_str|tojson }},
-            labels_str:{{ labels_str|tojson }}
-
+            ot_dates:{{ ot_times|tojson }},
+            ot_temperatures:{{ ot_temperatures|tojson }},
         };
 
         //Fill latest date into the date picker
-        let latest_date = Data.ot_dates.split("_")[0].split(" ")[0].split(".");
+        let latest_date = Data.ot_dates.split("_")[0].split(" ")[0].split("-");
         document.getElementById("search_date").placeholder = "Latest day:  " + latest_date[0] + "-" + latest_date[1] + "-" + latest_date[2];
 
-        plotGraphs(Data.ot_dates, Data.ot_values, Data.mt_dates, Data.mt_values, Data.ct_dates, Data.ct_values, Data.rock_a_dates, Data.rock_a_values, Data.roll_a_dates, Data.roll_a_values, Data.label_points_str, Data.labels_str);
+        plotGraphs(Data.ot_dates, Data.ot_temperatures);
+
+        //Display reinhardt setting
+        plotReinhardtSetting({{ arm_recipe_data }}, {{ recipe_settings }});
+        search_arm_by_date(latest_date[0] + "-" + latest_date[1] + "-" + latest_date[2], 1);
+        search_arm_by_date(latest_date[0] + "-" + latest_date[1] + "-" + latest_date[2], 2);
+        search_arm_by_date(latest_date[0] + "-" + latest_date[1] + "-" + latest_date[2], 3);
+        search_arm_by_date(latest_date[0] + "-" + latest_date[1] + "-" + latest_date[2], 4);
 
         function JulianDate(day, month, year) {
             const hasTimestamp = new Date(year, month - 1, day) - new Date(year);
@@ -226,7 +233,6 @@
             format: "dd-mm-yyyy",//date show format
             orientation: "bottom auto",
         }).on('changeDate', function (ev) {
-            //console.log($('#search_date').val());
 
             let select_date = $('#search_date').val();
             let select_day = select_date.split("-")[0];
@@ -239,11 +245,11 @@
 
 
             let XHR = new XMLHttpRequest();
-            let result = {};
-            result['date'] = select_date;
-            let pay_load = {"new_result": result};
-            XHR.open('POST', '/api/get_recipe');
-            XHR.setRequestHeader('content-type', 'application/json');  //先open再设置请求头
+            let parameter = {};
+            parameter['date'] = select_date;
+            let pay_load = {"parameter": parameter};
+            XHR.open('POST', '/api/reinhardt/get_recipe');
+            XHR.setRequestHeader('content-type', 'application/json');
             XHR.send(JSON.stringify(pay_load));
 
             let recipes_select = document.getElementById("recipes_dropdown");
@@ -266,17 +272,17 @@
             XHR.onreadystatechange = function () {
                 //if Response finish and success
                 if (XHR.readyState === 4 && XHR.status === 200) {
-                    {#console.log(XHR.responseText);#}
                     if (XHR.responseText && !(XHR.responseText === '0')) {
-                        let recipes = XHR.responseText.split('_');
+                        let result = XHR.responseText.split('_');
 
-                        for (let i = 0; i < recipes.length; i++) {
+                        for (let i = 0; i < result.length; i++) {
                             let recipe = document.createElement('a');
-                            recipe.text = recipe.value = recipes[i];
+                            recipe.text = recipe.value = result[i];
                             recipe.setAttribute("class", "dropdown-item");
                             recipe.setAttribute("href", "#");
                             recipes_select.appendChild(recipe);
                         }
+
 
                         let recipe = document.createElement('a');
                         recipe.text = recipe.value = "All";
@@ -317,8 +323,8 @@
             let result = {};
             result['date'] = $('#search_date').val();
             result['recipe'] = event.toElement.value;
-            let pay_load = {"new_result": result};
-            XHR2.open('POST', '/api/get_recipe_number');
+            let pay_load = {"parameter": result};
+            XHR2.open('POST', '/api/reinhardt/get_recipe_number');
             XHR2.setRequestHeader('content-type', 'application/json');  //先open再设置请求头
             XHR2.send(JSON.stringify(pay_load));
 
@@ -370,12 +376,17 @@
                 {#document.getElementById("loading").style = "visibility: visible";#}
                 let select_date = $('#search_date').val();
                 search_by_date(select_date);
+                let date_format_for_arm = select_date.split("-")[2] + "-" + select_date.split("-")[1] + "-" + select_date.split("-")[0];
+                search_arm_by_date(date_format_for_arm, 1);
+                search_arm_by_date(date_format_for_arm, 2);
+                search_arm_by_date(date_format_for_arm, 3);
+                search_arm_by_date(date_format_for_arm, 4);
             } else if (document.getElementById("serial_number").value === "") {
                 alert("Please select which circle of the recipe!");
                 return;
             } else if (document.getElementById("serial_number").value === "All") {
                 {#document.getElementById("loading").style = "visibility: visible";#}
-                {# $(this).prop("disabled", true);#}
+                {#$(this).prop("disabled", true);#}
                 // add spinner to button
                 $(this).html(
                     `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
@@ -393,8 +404,6 @@
                 search_by_date_recipe_number(select_date, document.getElementById("serial_recipe").value, document.getElementById("serial_number").value);
             }
         });
-
-
     </script>
 
 

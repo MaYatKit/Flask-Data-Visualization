@@ -64,99 +64,10 @@ function plotGraphs(ot_dates, ot_values, mt_dates, mt_values, ct_dates, ct_value
 
     let OT_newDataList = [], OT_newTimeList = [];
 
-    // OT_newDataList = valueList.slice();
-    // OT_newTimeList = timeList.slice();
 
 
     const timeFormat = 'h:mm:ss';
     ot_decimation(valueList, timeList, OT_newDataList, OT_newTimeList, 0, 400);
-    // const OT_chart = new Chart(OT_line_chart, {
-    //     // The type of chart we want to create
-    //     type: 'line',
-    //
-    //     // The data for our dataset
-    //     data: {
-    //         labels: OT_newTimeList,
-    //         datasets: [{
-    //             label: 'Oven Temperature',
-    //             borderColor: window.chartColors.blue,
-    //             backgroundColor: 'transparent',
-    //             data: OT_newDataList,
-    //             fill: false,
-    //             pointRadius: 0,
-    //             borderWidth: 2
-    //
-    //         }]
-    //     },
-    //
-    //     //Configuration options go here
-    //     options: {
-    //         responsive: true,
-    //         maintainAspectRatio: false,
-    //         legend: {
-    //             position: 'bottom',
-    //             labels: {
-    //                 padding: 10
-    //                 // fontColor: window.chartColors.blue,
-    //             }
-    //         },
-    //         scales: {
-    //             xAxes: [{
-    //                 type: 'time',
-    //                 distribution: 'linear', //data are spread at the same distance from each other
-    //                 ticks: {
-    //                     // source: 'data',
-    //                     // autoSkip: true,
-    //                     // maxRotation: 0,
-    //                     // autoSkipPadding: 50
-    //                     beginAtZero: false,
-    //                     source: 'time',
-    //                     autoSkip: true,
-    //                     maxRotation: 0,
-    //                     autoSkipPadding: 10
-    //                 },
-    //                 time: {
-    //                     format: timeFormat,
-    //                     unit: 'minute'
-    //                 },
-    //
-    //                 gridLines: {
-    //                     display: true
-    //                 }
-    //             }],
-    //             yAxes: [{
-    //                 time: 'time',
-    //                 ticks: {
-    //                     source: 'data',
-    //                     autoSkip: true,
-    //                     maxRotation: 0,
-    //                     autoSkipPadding: 10,
-    //                     suggestedMin: 0,
-    //                     suggestedMax: 500
-    //                 },
-    //
-    //                 gridLines: {
-    //                     display: true
-    //                 }
-    //             }]
-    //         },
-    //         hover: {
-    //             animationDuration: 0 // duration of animations when hovering an item
-    //         },
-    //         layout: {
-    //             padding: {left: 15, right: 15, top: 15, bottom: 15}
-    //         },
-    //         tooltip: {
-    //             bodySpacing: 4,
-    //             mode: "nearest",
-    //             intersect: 0,
-    //             position: "nearest",
-    //             xPadding: 10,
-    //             yPadding: 10,
-    //             caretPadding: 10
-    //         }
-    //     }
-    // });
 
     // {#---------Mould_Temperature_PV--------#}
 
@@ -175,89 +86,7 @@ function plotGraphs(ot_dates, ot_values, mt_dates, mt_values, ct_dates, ct_value
     let MT_newDataList = [], MT_newTimeList = [];
     MT_decimation(valueList, timeList, MT_newDataList, MT_newTimeList, 20, 200);
 
-    // const MT_chart = new Chart(MT_line_chart, {
-    //     // The type of chart we want to create
-    //     type: 'line',
-    //
-    //     // The data for our dataset
-    //     data: {
-    //         labels: MT_newTimeList,
-    //         datasets: [{
-    //             label: day,
-    //             borderColor: window.chartColors.green,
-    //             backgroundColor: 'transparent',
-    //             data: MT_newDataList,
-    //             fill: false,
-    //             pointRadius: 0,
-    //             borderWidth: 2,
-    //             spanGaps: false
-    //         }]
-    //     },
-    //
-    //     //Configuration options go here
-    //     options: {
-    //         responsive: true,
-    //         maintainAspectRatio: false,
-    //         legend: {
-    //             position: 'bottom',
-    //             labels: {
-    //                 padding: 10
-    //             }
-    //         },
-    //         scales: {
-    //             xAxes: [{
-    //                 type: 'time',
-    //                 distribution: 'linear', //data are spread at the same distance from each other
-    //                 ticks: {
-    //                     // source: 'data',
-    //                     // autoSkip: true,
-    //                     // maxRotation: 0,
-    //                     // autoSkipPadding: 50
-    //                     beginAtZero: false,
-    //                     source: 'time',
-    //                     autoSkip: true,
-    //                     maxRotation: 0,
-    //                     autoSkipPadding: 10
-    //                 },
-    //                 time: {
-    //                     format: timeFormat,
-    //                     unit: 'minute'
-    //                 },
-    //                 gridLines: {
-    //                     display: true
-    //                 }
-    //             }],
-    //             yAxes: [{
-    //                 time: 'time',
-    //                 ticks: {
-    //                     source: 'data',
-    //                     autoSkip: false,
-    //                     maxRotation: 0,
-    //                     autoSkipPadding: 10
-    //                 },
-    //
-    //                 gridLines: {
-    //                     display: true
-    //                 }
-    //             }]
-    //         },
-    //         hover: {
-    //             animationDuration: 0 // duration of animations when hovering an item
-    //         },
-    //         layout: {
-    //             padding: {left: 15, right: 15, top: 15, bottom: 15}
-    //         },
-    //         tooltip: {
-    //             bodySpacing: 4,
-    //             mode: "nearest",
-    //             intersect: 0,
-    //             position: "nearest",
-    //             xPadding: 10,
-    //             yPadding: 10,
-    //             caretPadding: 10
-    //         }
-    //     }
-    // });
+
 
     // {#-------Cooling_Temperature_PV--------#}
 
@@ -276,86 +105,6 @@ function plotGraphs(ot_dates, ot_values, mt_dates, mt_values, ct_dates, ct_value
 
     CT_decimation(valueList, timeList, CT_newDataList, CT_newTimeList, 0, 200);
 
-    // const CT_chart = new Chart(CT_line_chart, {
-    //     // The type of chart we want to create
-    //     type: 'line',
-    //
-    //     // The data for our dataset
-    //     data: {
-    //         labels: CT_newTimeList,
-    //         datasets: [{
-    //             label: day,
-    //             borderColor: window.chartColors.orange,
-    //             backgroundColor: 'transparent',
-    //             data: CT_newDataList,
-    //             fill: false,
-    //             pointRadius: 0,
-    //             borderWidth: 2,
-    //             spanGaps: false
-    //         }]
-    //     },
-    //
-    //     //Configuration options go here
-    //     options: {
-    //         responsive: true,
-    //         maintainAspectRatio: false,
-    //         legend: {
-    //             position: 'bottom',
-    //             labels: {
-    //                 padding: 10
-    //             }
-    //         },
-    //         scales: {
-    //             xAxes: [{
-    //                 type: 'time',
-    //                 distribution: 'linear', //series or linear: data are spread at the same distance from each other
-    //                 ticks: {
-    //                     beginAtZero: false,
-    //                     source: 'time',
-    //                     autoSkip: true,
-    //                     maxRotation: 0,
-    //                     autoSkipPadding: 10
-    //                 },
-    //                 time: {
-    //                     format: timeFormat,
-    //                     unit: 'minute'
-    //                 },
-    //                 gridLines: {
-    //                     display: true
-    //                 }
-    //             }],
-    //             yAxes: [{
-    //                 // type: 'string',
-    //                 display: 'auto',
-    //                 ticks: {
-    //                     source: 'data',
-    //                     autoSkip: false,
-    //                     maxRotation: 0,
-    //                     autoSkipPadding: 10
-    //                 },
-    //
-    //                 gridLines: {
-    //                     display: true
-    //                 }
-    //             }]
-    //         },
-    //         hover: {
-    //             animationDuration: 0 // duration of animations when hovering an item
-    //         },
-    //         layout: {
-    //             padding: {left: 15, right: 15, top: 15, bottom: 15}
-    //         },
-    //         tooltip: {
-    //             bodySpacing: 4,
-    //             mode: "nearest",
-    //             intersect: 0,
-    //             position: "nearest",
-    //             xPadding: 10,
-    //             yPadding: 10,
-    //             caretPadding: 10
-    //         }
-    //     }
-    // });
 
     // {#------------CT_MT_mix_chart------------#}
 
@@ -879,426 +628,50 @@ function plotGraphs(ot_dates, ot_values, mt_dates, mt_values, ct_dates, ct_value
     $("#search_button").text("Search");
 }
 
-// // {#-------Oven_Temperature_PV--------#}
-// var ot_names = Data.ot_names;
-// var ot_dates = Data.ot_dates;
-// var ot_values = Data.ot_values;
-// var ot_validities = Data.ot_validities;
-// var ot_mills = Data.ot_mills;
-//
-// // {#---------Mould_Temperature_PV--------#}
-// var mt_names = Data.mt_names;
-// var mt_dates = Data.mt_dates;
-// var mt_values = Data.mt_values;
-// var mt_validities = Data.mt_validities;
-// var mt_mills = Data.mt_mills;
-//
-//
-// // {#-------Cooling_Temperature_PV--------#}
-// var ct_names = Data.ct_names;
-// var ct_dates = Data.ct_dates;
-// var ct_values = Data.ct_values;
-// var ct_validities = Data.ct_validities;
-// var ct_mills = Data.ct_mills;
-//
-// // {#------------Rock_Angle_PV------------#}
-// var rock_a_names = Data.rock_a_names;
-// var rock_a_dates = Data.rock_a_dates;
-// var rock_a_values = Data.rock_a_values;
-// var rock_a_validities = Data.rock_a_validities;
-// var rock_a_mills = Data.rock_a_mills;
-//
-//
-// // {#------------Roll_Angle_PV------------#}
-// var roll_a_names = Data.roll_a_names;
-// var roll_a_dates = Data.roll_a_dates;
-// var roll_a_values = Data.roll_a_values;
-// var roll_a_validities = Data.roll_a_validities;
-// var roll_a_mills = Data.roll_a_mills;
-//
-//
-// //Oven_Temperature_PV
-// const OT_line_chart = document.getElementById('OT_line_chart').getContext('2d');
-// //Mould_Temperature_PV
-// const MT_line_chart = document.getElementById('MT_line_chart').getContext('2d');
-// //Cooling_Temperature_PV
-// const CT_line_chart = document.getElementById('CT_line_chart').getContext('2d');
-// //Mould_Cooling_mix_PV
-// const CT_MT_mix_line_chart = document.getElementById('CT_MT_mix_line_chart').getContext('2d');
-// //Rock_Angle_PV
-// const RockA_line_chart = document.getElementById('RockA_line_chart').getContext('2d');
-// //Roll_Angle_PV
-// const RollA_line_chart = document.getElementById('RollA_line_chart').getContext('2d');
-//
-//
-// let tempList = ot_dates.split("_");
-// let valueList = ot_values.split("_");
-//
-// let timeList = [];
-// for (const i of tempList) {
-//     timeList.push(i.split(" ")[1]);
-// }
-// let day = tempList[0].split(" ")[0];
-//
-//
-// let OT_newDataList = [], OT_newTimeList = [];
 
 function ot_decimation(dataList, timeList, newDataList, newTimeList, min, max) {
-    let lastSearchIndex = 0;
-    for (data of dataList) {
-        const value = parseInt(data.split(".")[0]);
+    for (let index = 0; index < dataList.length; index++) {
+        const value = parseInt(dataList[index].split(".")[0]);
         if (value > max || value <= min) {
-            const ind = dataList.indexOf(data, lastSearchIndex);
-            lastSearchIndex = ind;
             newDataList.push(null);
-            newTimeList.push(timeList[ind]);
+            newTimeList.push(timeList[index]);
         } else {
-            const ind = dataList.indexOf(data, lastSearchIndex);
-            lastSearchIndex = ind;
             newDataList.push(value);
-            newTimeList.push(timeList[ind]);
+            newTimeList.push(timeList[index]);
         }
     }
 }
 
-// decimation(valueList, timeList, OT_newDataList, OT_newTimeList, 0, 500);
-
-// OT_newDataList = valueList.slice();
-// OT_newTimeList = timeList.slice();
-//
-// var timeFormat = 'h:mm:ss';
-// const OT_chart = new Chart(OT_line_chart, {
-//     // The type of chart we want to create
-//     type: 'line',
-//
-//     // The data for our dataset
-//     data: {
-//         labels: OT_newTimeList,
-//         datasets: [{
-//             label: day,
-//             borderColor: window.chartColors.blue,
-//             backgroundColor: 'transparent',
-//             data: OT_newDataList,
-//             fill: false,
-//             pointRadius: 0,
-//             borderWidth: 2
-//
-//         }]
-//     },
-//
-//     //Configuration options go here
-//     options: {
-//         responsive: true,
-//         maintainAspectRatio: false,
-//         legend: {
-//             position: 'bottom',
-//             labels: {
-//                 padding: 10
-//                 // fontColor: window.chartColors.blue,
-//             }
-//         },
-//         scales: {
-//             xAxes: [{
-//                 type: 'time',
-//                 distribution: 'linear', //data are spread at the same distance from each other
-//                 ticks: {
-//                     // source: 'data',
-//                     // autoSkip: true,
-//                     // maxRotation: 0,
-//                     // autoSkipPadding: 50
-//                     beginAtZero: false,
-//                     source: 'time',
-//                     autoSkip: true,
-//                     maxRotation: 0,
-//                     autoSkipPadding: 10
-//                 },
-//                 time: {
-//                     format: timeFormat,
-//                     unit: 'minute'
-//                 },
-//
-//                 gridLines: {
-//                     display: true
-//                 }
-//             }],
-//             yAxes: [{
-//                 time: 'time',
-//                 ticks: {
-//                     source: 'data',
-//                     autoSkip: true,
-//                     maxRotation: 0,
-//                     autoSkipPadding: 10,
-//                     suggestedMin: 0,
-//                     suggestedMax: 500
-//                 },
-//
-//                 gridLines: {
-//                     display: true
-//                 }
-//             }]
-//         },
-//         hover: {
-//             animationDuration: 0 // duration of animations when hovering an item
-//         },
-//         layout: {
-//             padding: {left: 15, right: 15, top: 15, bottom: 15}
-//         },
-//         tooltip: {
-//             bodySpacing: 4,
-//             mode: "nearest",
-//             intersect: 0,
-//             position: "nearest",
-//             xPadding: 10,
-//             yPadding: 10,
-//             caretPadding: 10
-//         }
-//     }
-// });
-//
-// valueList.splice(0, valueList.length);
-// tempList.splice(0, tempList.length);
-// timeList.splice(0, timeList.length);
-// // tempList.length = 0;
-// //valueList.length = 0;
-// // timeList.length = 0;
-// day.length = 0;
-//
-// tempList = mt_dates.split("_");
-// valueList = mt_values.split("_");
-// for (const i of tempList) {
-//     timeList.push(i.split(" ")[1]);
-// }
-// day = tempList[0].split(" ")[0];
 
 
 function MT_decimation(dataList, timeList, newDataList, newTimeList, min, max) {
-    let lastSearchIndex = 0;
-    for (data of dataList) {
-        const value = parseInt(data.split(".")[0]);
+    for (let index = 0; index < dataList.length; index++) {
+        const value = parseInt(dataList[index].split(".")[0]);
         if (value > max || value < min) {
-            // if (value < min) {
-            const ind = dataList.indexOf(data, lastSearchIndex);
-            lastSearchIndex = ind;
             newDataList.push(null);
-            newTimeList.push(timeList[ind]);
-            // }
+            newTimeList.push(timeList[index]);
         } else {
-            const ind = dataList.indexOf(data, lastSearchIndex);
-            lastSearchIndex = ind;
             newDataList.push(value);
-            newTimeList.push(timeList[ind]);
+            newTimeList.push(timeList[index]);
         }
     }
 }
 
-// let MT_newDataList = [], MT_newTimeList = [];
-// MT_decimation(valueList, timeList, MT_newDataList, MT_newTimeList, 20, 200);
-//
-// const MT_chart = new Chart(MT_line_chart, {
-//     // The type of chart we want to create
-//     type: 'line',
-//
-//     // The data for our dataset
-//     data: {
-//         labels: MT_newTimeList,
-//         datasets: [{
-//             label: day,
-//             borderColor: window.chartColors.green,
-//             backgroundColor: 'transparent',
-//             data: MT_newDataList,
-//             fill: false,
-//             pointRadius: 0,
-//             borderWidth: 2,
-//             spanGaps: false
-//         }]
-//     },
-//
-//     //Configuration options go here
-//     options: {
-//         responsive: true,
-//         maintainAspectRatio: false,
-//         legend: {
-//             position: 'bottom',
-//             labels: {
-//                 padding: 10
-//             }
-//         },
-//         scales: {
-//             xAxes: [{
-//                 type: 'time',
-//                 distribution: 'linear', //data are spread at the same distance from each other
-//                 ticks: {
-//                     // source: 'data',
-//                     // autoSkip: true,
-//                     // maxRotation: 0,
-//                     // autoSkipPadding: 50
-//                     beginAtZero: false,
-//                     source: 'time',
-//                     autoSkip: true,
-//                     maxRotation: 0,
-//                     autoSkipPadding: 10
-//                 },
-//                 time: {
-//                     format: timeFormat,
-//                     unit: 'minute'
-//                 },
-//                 gridLines: {
-//                     display: true
-//                 }
-//             }],
-//             yAxes: [{
-//                 time: 'time',
-//                 ticks: {
-//                     source: 'data',
-//                     autoSkip: false,
-//                     maxRotation: 0,
-//                     autoSkipPadding: 10
-//                 },
-//
-//                 gridLines: {
-//                     display: true
-//                 }
-//             }]
-//         },
-//         hover: {
-//             animationDuration: 0 // duration of animations when hovering an item
-//         },
-//         layout: {
-//             padding: {left: 15, right: 15, top: 15, bottom: 15}
-//         },
-//         tooltip: {
-//             bodySpacing: 4,
-//             mode: "nearest",
-//             intersect: 0,
-//             position: "nearest",
-//             xPadding: 10,
-//             yPadding: 10,
-//             caretPadding: 10
-//         }
-//     }
-// });
-//
-//
-// valueList.splice(0, valueList.length);
-// tempList.splice(0, tempList.length);
-// timeList.splice(0, timeList.length);
-// // tempList.length = 0;
-// // valueList.length = 0;
-// // timeList.length = 0;
-// day.length = 0;
-//
-// tempList = ct_dates.split("_");
-// valueList = ct_values.split("_");
-// for (const i of tempList) {
-//     timeList.push(i.split(" ")[1]);
-// }
-// day = tempList[0].split(" ")[0];
-//
-//
-// let CT_newDataList = [], CT_newTimeList = [];
 
 function CT_decimation(dataList, timeList, newDataList, newTimeList, min, max) {
-    let lastSearchIndex = 0;
-    for (data of dataList) {
-        const value = parseInt(data.split(".")[0]);
+    for (let index = 0; index < dataList.length; index++) {
+        const value = parseInt(dataList[index].split(".")[0]);
         if (value > max || value <= min) {
             if (value === 0) {
-                const ind = dataList.indexOf(data, lastSearchIndex);
-                lastSearchIndex = ind;
                 newDataList.push(null);
-                newTimeList.push(timeList[ind]);
+                newTimeList.push(timeList[index]);
             }
         } else {
-            const ind = dataList.indexOf(data, lastSearchIndex);
-            lastSearchIndex = ind;
             newDataList.push(value);
-            newTimeList.push(timeList[ind]);
+            newTimeList.push(timeList[index]);
         }
     }
 }
-
-// CT_decimation(valueList, timeList, CT_newDataList, CT_newTimeList, 0, 200);
-//
-// const CT_chart = new Chart(CT_line_chart, {
-//     // The type of chart we want to create
-//     type: 'line',
-//
-//     // The data for our dataset
-//     data: {
-//         labels: CT_newTimeList,
-//         datasets: [{
-//             label: day,
-//             borderColor: window.chartColors.orange,
-//             backgroundColor: 'transparent',
-//             data: CT_newDataList,
-//             fill: false,
-//             pointRadius: 0,
-//             borderWidth: 2,
-//             spanGaps: false
-//         }]
-//     },
-//
-//     //Configuration options go here
-//     options: {
-//         responsive: true,
-//         maintainAspectRatio: false,
-//         legend: {
-//             position: 'bottom',
-//             labels: {
-//                 padding: 10
-//             }
-//         },
-//         scales: {
-//             xAxes: [{
-//                 type: 'time',
-//                 distribution: 'linear', //series or linear: data are spread at the same distance from each other
-//                 ticks: {
-//                     beginAtZero: false,
-//                     source: 'time',
-//                     autoSkip: true,
-//                     maxRotation: 0,
-//                     autoSkipPadding: 10
-//                 },
-//                 time: {
-//                     format: timeFormat,
-//                     unit: 'minute'
-//                 },
-//                 gridLines: {
-//                     display: true
-//                 }
-//             }],
-//             yAxes: [{
-//                 // type: 'string',
-//                 display: 'auto',
-//                 ticks: {
-//                     source: 'data',
-//                     autoSkip: false,
-//                     maxRotation: 0,
-//                     autoSkipPadding: 10
-//                 },
-//
-//                 gridLines: {
-//                     display: true
-//                 }
-//             }]
-//         },
-//         hover: {
-//             animationDuration: 0 // duration of animations when hovering an item
-//         },
-//         layout: {
-//             padding: {left: 15, right: 15, top: 15, bottom: 15}
-//         },
-//         tooltip: {
-//             bodySpacing: 4,
-//             mode: "nearest",
-//             intersect: 0,
-//             position: "nearest",
-//             xPadding: 10,
-//             yPadding: 10,
-//             caretPadding: 10
-//         }
-//     }
-// });
 
 function transformDateTimestamp(time) {
     let hour = time.split(":")[0];

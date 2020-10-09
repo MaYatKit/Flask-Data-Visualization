@@ -1,8 +1,4 @@
 # -*- encoding: utf-8 -*-
-"""
-License: MIT
-Copyright (c) 2019 - present AppSeed.us
-"""
 
 import os
 
@@ -20,4 +16,6 @@ class Config():
 
     SQLALCHEMY_BINDS = {
         'rock_roll': 'sqlite:///' + os.path.join(os.path.dirname(__file__), '../rr_database.db'),
+        'k-kord': 'sqlite:///' + os.path.join(os.path.dirname(__file__), '../k_kord_Database.db'),
+        'reinhardt': 'sqlite:///' + os.path.join(os.path.dirname(__file__), '../rh_database.db'),
     }

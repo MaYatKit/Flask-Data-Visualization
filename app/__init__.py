@@ -32,4 +32,4 @@ def initialize_database():
 
 
 # Import routing, models and Start the App
-from app import views, models
+from app import views, models, reinhardt_views
