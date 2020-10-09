@@ -3,7 +3,9 @@
 This project is a promising showcase about data visualization for industrial manufacture factories, being affordable, intuitive and easy to conduct.<br/>
 <img title="Screen display of the Web application" width="700" src="gif.gif"><br/><br/>
 Zoom & drag and displaying other field data when hovering: (**21.08.2020 update**)<br/>
-<img title="Screen display of the Web application" width="700" src="zoom.gif">
+<img title="Screen display of the Web application" width="700" src="zoom.gif"><br/><br/>
+Display current setting and plot updated data for a moulding machine: (**09.10.2020 update**)<br/>
+<img title="Screen display of the Web application" width="700" src="reinhard.gif">
 
 Live demo: https://data-visualization-flask.herokuapp.com<br/> 
 ### Description of two main components are the following: <br/>
@@ -13,6 +15,8 @@ Live demo: https://data-visualization-flask.herokuapp.com<br/>
 
 ### Update
 **21.08.2020:** Added a zooming function for graphs and code for displaying other fields when hovering on a field such as display mould temperature when hovering on oven temperature with the nearest timestamp.
+**09.10.2020** Added another page for the second which is a moulding machine with 4 arms, each arm can install different moulds with different recipes. Also, the machine can rotate horizontally and extand the arm into an oven that heats the arm. We collect data from the oven and four arms utilizing a Python script and plot them on a new page; and, we display current machine setting on the top of the page, which mean design engineer do not need to go down to the factory but still can know what latest setting is.
+
 
 
 ### Future work
